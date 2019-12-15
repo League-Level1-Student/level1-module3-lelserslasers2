@@ -8,9 +8,14 @@ int movePost2 = 600;
 int postSize2 = (int)random(401)+50;
 boolean move1 = true;
 boolean move2 = false;
+int score = 0;
+boolean alive = true;
 
 void mousePressed(){
   y = y - birdYVelocity;
+}
+void keyPressed(){
+  y = y + birdYVelocity;
 }
 
 boolean touchPipe(){
@@ -26,7 +31,7 @@ boolean touchPipe(){
 void drawPipe(int size, int xPos){
   fill(0, 150, 0);
   stroke(0, 150, 0);
-  rect(xPos, 0, 25, 500-size);
+  rect(xPos, 0, 25, 450-size);
   rect(xPos, 600-size, 25, size);
 }
 
@@ -35,6 +40,7 @@ void setup(){
 }
 
 void draw(){
+  if (alive){
   background(0, 0, 150);
   y = y + gravity;
   
@@ -48,11 +54,13 @@ void draw(){
   }
   if (movePost < 250 && move2 == false){
      move2 = true;
-     print("2");
+     score = score + 1;
+     print("Score: " + score + ", ");
   }
   if (movePost2 < 250 && move1 == false){
      move1 = true;
-     print("1");
+     score = score + 1;
+     print("Score: " + score + ", ");
   }
   if (movePost < 0){
      movePost = 600;
@@ -67,6 +75,16 @@ void draw(){
   
   fill(150, 0, 0);
   stroke(150, 0, 0);
+  if (touchPipe()){
+    alive = false;
+  }
   ellipse(x, y, 15, 15);
+  text("Score: " + score, 100, 100);
   
+  }
+  else{
+  background(0, 0, 150);
+  print("You have Died!! Score: " + score);
+  text("You have Died! Score: " + score, 100, 100);
+  }
 }
